@@ -8,6 +8,7 @@ test('no length', () => {
   ship.hit();
   expect(ship.getHitTimes()).toBe(1);
   expect(ship.isSunk()).toBe(true);
+  expect(ship.g)
 });
 
 test('length 3', () => {
