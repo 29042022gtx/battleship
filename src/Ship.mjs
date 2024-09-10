@@ -9,7 +9,8 @@ class Ship {
   constructor(length = 0, coor = new Coordinates()) {
     this.#setLength(length);
     this.#orientation = this.createOrientation();
-    this.#coorList = coor.createCoorList(this.getLength, this.isVertical);
+    this.#coorList.pop();
+    // this.#coorList = coor.createCoorList(this.getLength, this.isVertical);
   }
 
   #setLength(length) {
