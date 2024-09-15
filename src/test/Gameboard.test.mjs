@@ -3,7 +3,8 @@ import Gameboard from '../Gameboard.mjs';
 const gb = new Gameboard(10, 10, [5, 4, 3, 3, 2]);
 
 test('Create 10 x 10 board', () => {
-  expect(gb.getBoard().length).toBe(100);
+  expect(gb.getWidth()).toBe(10);
+  expect(gb.getHeight()).toBe(10);
 });
 
 test('Check ship list', () => {

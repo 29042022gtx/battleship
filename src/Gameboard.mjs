@@ -2,20 +2,24 @@ import Coordinates from './Coordinates.mjs';
 import Ship from './Ship.mjs';
 
 class Gameboard {
+  #width;
+  #height;
   #board;
   #shipList;
   #missedCoorList = [new Coordinates()];
 
   constructor(width = 0, height = 0, shipSizes = []) {
-    this.#board = Gameboard.createBoard(width, height);
-    this.#shipList = Gameboard.createShipList(shipSizes);
+    this.#width = Math.floor(Number(width));
+    this.#height = Math.floor(Number(height));
+    this.#board = this.#createBoard(this.#width, this.#height);
+    this.#shipList = this.#createShipList(shipSizes);
     this.#missedCoorList.pop();
   }
 
   isAllSunk() {
     return this.#shipList.every((ship) => {
       return ship.isSunk();
-    })
+    });
   }
 
   getMissedCoorList() {
@@ -79,12 +83,12 @@ class Gameboard {
   placeAllShips() {
     this.#shipList.forEach((ship, idx) => {
       let placeShipSuccess = false;
-      while(!placeShipSuccess) {
+      while (!placeShipSuccess) {
         const x = Math.round(Math.random() * 10);
         const y = Math.round(Math.random() * 10);
         placeShipSuccess = this.placeShip(idx, x, y);
       }
-    })
+    });
   }
 
   placeShip(shipIdx = 0, x = 0, y = 0) {
@@ -137,6 +141,14 @@ class Gameboard {
     return this.#board;
   }
 
+  getHeight() {
+    return this.#height;
+  }
+
+  getWidth() {
+    return this.#width;
+  }
+
   static exists(array = [], element, callback = () => {}) {
     if (typeof callback != 'function') {
       throw new Error('callback is not specified!');
@@ -146,7 +158,7 @@ class Gameboard {
     });
   }
 
-  static createShipList(shipSizes = []) {
+  #createShipList(shipSizes = []) {
     if (!Array.isArray(shipSizes)) {
       return [];
     }
@@ -158,9 +170,7 @@ class Gameboard {
     return shipList;
   }
 
-  static createBoard(width, height) {
-    width = Math.floor(Number(width));
-    height = Math.floor(Number(height));
+  #createBoard(width, height) {
     const arr = [];
     for (let y = 0; y < width; y += 1) {
       for (let x = 0; x < height; x += 1) {
