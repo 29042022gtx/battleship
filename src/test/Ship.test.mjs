@@ -1,3 +1,4 @@
+import Coordinates from '../Coordinates.mjs';
 import Ship from '../Ship.mjs';
 
 const ship1 = new Ship();
@@ -34,4 +35,10 @@ test('Ship is sunk when hitTimes >= length', () => {
   ship2.hit();
   ship2.hit();
   expect(ship2.isSunk()).toBe(true);
+});
+
+test('Remove coor list', () => {
+  ship2.setCoorList(new Coordinates(1, 2));
+  ship2.removeCoorList();
+  expect(ship2.getCoorList().length).toBe(0);
 });

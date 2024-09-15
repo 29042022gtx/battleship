@@ -5,6 +5,7 @@ class Player {
 
   constructor() {
     this.#gameBoard = new Gameboard(10, 10, [5, 4, 3, 3, 2]);
+    this.#gameBoard.placeAllShips();
   }
 
   getGameboard() {

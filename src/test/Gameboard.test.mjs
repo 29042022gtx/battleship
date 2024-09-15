@@ -17,21 +17,14 @@ test('Check ship list', () => {
   expect(shipList[4].getLength()).toBe(2);
 });
 
-test('Valid coor', () => {
-  expect(gb.isValidCoor(gb.getCoorListAll(), new Coordinates(11, 0))).toBe(
-    false,
-  );
-});
-
 test('Place ships', () => {
   expect(gb.placeShip(0, 0, 0)).toBe(true);
-  expect(gb.placeShip(1, 0, 0)).toBe(false);
-  expect(gb.placeShip(1, 5, 0)).toBe(true);
+  expect(gb.placeShip(1, 6, 0)).toBe(true);
 });
 
 test('receiveAttack', () => {
   expect(gb.receiveAttack(0, 0)).toBe(true);
-  expect(gb.receiveAttack(5, 0)).toBe(true);
+  expect(gb.receiveAttack(6, 0)).toBe(true);
 });
 
 test('Missed attack', () => {

@@ -55,6 +55,9 @@ class Gameboard {
   }
 
   placeAllShips() {
+    this.#shipList.forEach((ship) => {
+      ship.removeCoorList();
+    });
     this.#shipList.forEach((ship, idx) => {
       let placeShipSuccess = false;
       while (!placeShipSuccess) {
@@ -97,7 +100,7 @@ class Gameboard {
   #isValidCoorList(coorList = [new Coordinates()]) {
     const coorListAll = this.getCoorListAll();
     return coorList.every((coor) => {
-      return this.isValidCoor(coorListAll, coor);
+      return this.#isValidCoor(coorListAll, coor);
     });
   }
 
@@ -113,11 +116,16 @@ class Gameboard {
     return true;
   }
 
-  isValidCoor(coorList = [new Coordinates()], coor = new Coordinates()) {
+  #isValidCoor(coorList = [new Coordinates()], coor = new Coordinates()) {
     return (
       this.#isOnBoard(coor) &&
       coorList.every((item) => {
-        return !item.equals(coor);
+        return (
+          !item.equals(coor) &&
+          item.createCoorListAround().every((aroundCoor) => {
+            return !aroundCoor.equals(coor);
+          })
+        );
       })
     );
   }

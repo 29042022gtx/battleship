@@ -21,6 +21,10 @@ class Ship {
     this.#length = lengthNum;
   }
 
+  removeCoorList() {
+    this.#coorList = [];
+  }
+
   setCoorList(coor = new Coordinates()) {
     this.#coorList = coor.createCoorList(this.getLength(), this.isVertical());
   }
