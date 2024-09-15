@@ -22,6 +22,22 @@ class Coordinates {
     return coorList;
   }
 
+  createCoorListAround() {
+    const coorList = [new Coordinates()];
+    coorList.pop();
+    const x = this.getX();
+    const y = this.getY();
+    coorList.push(new Coordinates(x - 1, y - 1));
+    coorList.push(new Coordinates(x, y - 1));
+    coorList.push(new Coordinates(x + 1, y - 1));
+    coorList.push(new Coordinates(x - 1, y));
+    coorList.push(new Coordinates(x + 1, y));
+    coorList.push(new Coordinates(x - 1, y + 1));
+    coorList.push(new Coordinates(x, y + 1));
+    coorList.push(new Coordinates(x + 1, y + 1));
+    return coorList;
+  }
+
   equals(coor = new Coordinates()) {
     if (!(coor instanceof Coordinates)) {
       return false;
