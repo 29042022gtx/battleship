@@ -1,24 +1,37 @@
 import Ship from '../Ship.mjs';
 
-test('no length', () => {
-  const ship = new Ship();
-  expect(ship.getLength()).toBe(0);
-  expect(ship.getHitTimes()).toBe(0);
-  expect(ship.isSunk()).toBe(true);
-  ship.hit();
-  expect(ship.getHitTimes()).toBe(1);
-  expect(ship.isSunk()).toBe(true);
-  expect(ship.g)
+const ship1 = new Ship();
+
+test('Ship without length is sunk', () => {
+  expect(ship1.isSunk()).toBe(true);
 });
 
-test('length 3', () => {
-  const ship = new Ship(3);
-  expect(ship.getLength()).toBe(3);
-  expect(ship.getHitTimes()).toBe(0);
-  ship.hit();
-  expect(ship.getHitTimes()).toBe(1);
-  expect(ship.isSunk()).toBe(false);
-  ship.hit();
-  ship.hit();
-  expect(ship.isSunk()).toBe(true);
+test('Initial hitTimes == 0', () => {
+  expect(ship1.getHitTimes()).toBe(0);
+});
+
+test('Increase hitTimes', () => {
+  ship1.hit();
+  expect(ship1.getHitTimes()).toBe(1);
+  expect(ship1.isSunk()).toBe(true);
+});
+
+test('Ship is sunk when hitTimes >= length', () => {
+  expect(ship1.isSunk()).toBe(true);
+});
+
+const ship2 = new Ship(3);
+test('Initial length = 3', () => {
+  expect(ship2.getLength()).toBe(3);
+});
+
+test('Ship is not sunk when hitTimes < length', () => {
+  expect(ship2.isSunk()).toBe(false);
+});
+
+test('Ship is sunk when hitTimes >= length', () => {
+  ship2.hit();
+  ship2.hit();
+  ship2.hit();
+  expect(ship2.isSunk()).toBe(true);
 });
