@@ -18,6 +18,11 @@ class Gameboard {
 
   isAllSunk() {
     return this.#shipList.every((ship) => {
+      // let s = '';
+      // ship.getCoorList().forEach((coor) => {
+      //   s += '(' + coor.getX() + ', ' + coor.getY() + '); ';
+      // });
+      // console.log(s);
       return ship.isSunk();
     });
   }
@@ -49,37 +54,6 @@ class Gameboard {
     return true;
   }
 
-  #isValidCoorList(
-    coorList1 = [new Coordinates()],
-    coorList2 = [new Coordinates()],
-  ) {
-    return coorList2.every((item) => {
-      return this.#isValidCoor(coorList1, item);
-    });
-  }
-
-  #isValidCoor(coorList = [new Coordinates()], coor = new Coordinates()) {
-    return (
-      coorList.every((item) => {
-        return !item.equals(coor);
-      }) && this.#isOnBoard(coor)
-    );
-  }
-
-  #isOnBoard(coor = new Coordinates()) {
-    const width = 10;
-    const height = 10;
-    if (
-      coor.getX() < 0 ||
-      coor.getX() >= width ||
-      coor.getY() < 0 ||
-      coor.getY() >= height
-    ) {
-      return false;
-    }
-    return true;
-  }
-
   placeAllShips() {
     this.#shipList.forEach((ship, idx) => {
       let placeShipSuccess = false;
@@ -92,29 +66,16 @@ class Gameboard {
   }
 
   placeShip(shipIdx = 0, x = 0, y = 0) {
-    if (
-      !this.#isOnBoard(new Coordinates(x, y)) ||
-      shipIdx < 0 ||
-      shipIdx >= this.#shipList.length
-    ) {
+    if (shipIdx < 0 || shipIdx >= this.#shipList.length) {
       return false;
     }
-
-    const coorListAll = [];
-    this.#shipList.forEach((ship) => {
-      coorListAll.push(...ship.getCoorList());
-    });
 
     const ship = this.#shipList[shipIdx];
     const coor = new Coordinates(x, y);
     const isNewValidCoorList = this.#isValidCoorList(
-      coorListAll,
-      coor.createCoorList(ship.getLength()),
+      coor.createCoorList(ship.getLength(), ship.isVertical()),
     );
 
-    // coor.createCoorList(ship.getLength()).forEach((item) => {
-    //   console.log(`${item.getX()}, ${item.getY()}`);
-    // });
     if (!isNewValidCoorList) {
       return false;
     }
@@ -122,15 +83,43 @@ class Gameboard {
     return true;
   }
 
-  printBoard() {
-    let s = '';
-    for (let i = 0; i < 100; i += 1) {
-      s += this.#board[i] + ' ';
-      if (i % 10 == 9) {
-        console.log(s);
-        s = '';
+  getCoorListAll() {
+    const coorListAll = [new Coordinates()];
+    coorListAll.pop();
+    this.#shipList.forEach((ship) => {
+      if (ship.getCoorList().length != 0) {
+        coorListAll.push(...ship.getCoorList());
       }
+    });
+    return coorListAll;
+  }
+
+  #isValidCoorList(coorList = [new Coordinates()]) {
+    const coorListAll = this.getCoorListAll();
+    return coorList.every((coor) => {
+      return this.isValidCoor(coorListAll, coor);
+    });
+  }
+
+  #isOnBoard(coor = new Coordinates()) {
+    if (
+      coor.getX() < 0 ||
+      coor.getX() >= this.getWidth() ||
+      coor.getY() < 0 ||
+      coor.getY() >= this.getHeight()
+    ) {
+      return false;
     }
+    return true;
+  }
+
+  isValidCoor(coorList = [new Coordinates()], coor = new Coordinates()) {
+    return (
+      this.#isOnBoard(coor) &&
+      coorList.every((item) => {
+        return !item.equals(coor);
+      })
+    );
   }
 
   getShipList() {
@@ -147,6 +136,17 @@ class Gameboard {
 
   getWidth() {
     return this.#width;
+  }
+
+  printBoard() {
+    let s = '';
+    for (let i = 0; i < 100; i += 1) {
+      s += this.#board[i] + ' ';
+      if (i % 10 == 9) {
+        console.log(s);
+        s = '';
+      }
+    }
   }
 
   static exists(array = [], element, callback = () => {}) {
@@ -182,6 +182,7 @@ class Gameboard {
 }
 
 // console.log('\x1b[2J\x1b[3J\x1b[H');
-// const gb1 = new Gameboard();
+// const gb = new Gameboard(10, 10, [5, 4, 3, 3, 2]);
+// gb.placeShip(0, 0, 0);
 
 export default Gameboard;

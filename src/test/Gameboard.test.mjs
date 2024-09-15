@@ -1,3 +1,4 @@
+import Coordinates from '../Coordinates.mjs';
 import Gameboard from '../Gameboard.mjs';
 
 const gb = new Gameboard(10, 10, [5, 4, 3, 3, 2]);
@@ -16,8 +17,15 @@ test('Check ship list', () => {
   expect(shipList[4].getLength()).toBe(2);
 });
 
+test('Valid coor', () => {
+  expect(gb.isValidCoor(gb.getCoorListAll(), new Coordinates(11, 0))).toBe(
+    false,
+  );
+});
+
 test('Place ships', () => {
   expect(gb.placeShip(0, 0, 0)).toBe(true);
+  expect(gb.placeShip(1, 0, 0)).toBe(false);
   expect(gb.placeShip(1, 5, 0)).toBe(true);
 });
 
@@ -35,9 +43,10 @@ test('Missed attack', () => {
 
 test('Is all sunk', () => {
   gb.placeAllShips();
-  const board = gb.getBoard();
-  for (let i = 0; i < board.length; i += 1) {
-    gb.receiveAttack(board[i][0], board[i][1]);
+  for (let i = 0; i < gb.getHeight(); i += 1) {
+    for (let j = 0; j < gb.getWidth(); j += 1) {
+      gb.receiveAttack(j, i);
+    }
   }
   expect(gb.isAllSunk()).toBe(true);
 });
