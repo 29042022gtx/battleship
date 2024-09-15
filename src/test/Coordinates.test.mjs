@@ -17,3 +17,17 @@ test('getX() == 1', () => {
 test('equals(new Coordinates(1, 5) == true', () => {
   expect(coor.equals(new Coordinates(1, 5))).toBe(true);
 });
+
+test('Create vertical coorList', () => {
+  const coorList = coor.createCoorList(3, true)
+  expect(coorList[0].equals(new Coordinates(1, 5))).toBe(true);
+  expect(coorList[1].equals(new Coordinates(1, 6))).toBe(true);
+  expect(coorList[2].equals(new Coordinates(1, 7))).toBe(true);
+})
+
+test('Create horizontal coorList', () => {
+  const coorList = coor.createCoorList(3, false)
+  expect(coorList[0].equals(new Coordinates(1, 5))).toBe(true);
+  expect(coorList[1].equals(new Coordinates(2, 5))).toBe(true);
+  expect(coorList[2].equals(new Coordinates(3, 5))).toBe(true);
+})

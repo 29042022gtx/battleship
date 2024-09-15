@@ -45,7 +45,7 @@ class Ship {
     return this.getHitTimes() >= this.getLength();
   }
 
-  isHorizoltal() {
+  isHorizontal() {
     return !this.#orientation;
   }
 
