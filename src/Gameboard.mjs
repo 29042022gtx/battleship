@@ -32,19 +32,18 @@ class Gameboard {
   }
 
   receiveAttack(x, y) {
-    if (!this.#isOnBoard(new Coordinates(x, y))) {
-      return false;
-    }
-    const hit = this.#shipList.some((ship) => {
-      const hit = ship.getCoorList().some((item) => {
-        return item.equals(new Coordinates(x, y));
-      });
-      if (!hit) {
+    const coor = new Coordinates(x, y);
+    const hit = this.getShipList().some((ship) => {
+      const coorList = ship.getCoorList();
+      const isShipCell = coorList.some((val) => {
+        return val.equals(coor);
+      })
+      if (!isShipCell) {
         return false;
       }
       ship.hit();
       return true;
-    });
+    })
 
     if (!hit) {
       this.#missedCoorList.push([x, y]);
@@ -188,9 +187,5 @@ class Gameboard {
     return arr;
   }
 }
-
-// console.log('\x1b[2J\x1b[3J\x1b[H');
-// const gb = new Gameboard(10, 10, [5, 4, 3, 3, 2]);
-// gb.placeShip(0, 0, 0);
 
 export default Gameboard;

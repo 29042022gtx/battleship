@@ -50,7 +50,7 @@ class Coordinates {
   }
 
   setX(x) {
-    this.#x = Math.floor(Number(x)) || 0;
+    this.#x = this.#getInt(x);
   }
 
   getY() {
@@ -58,7 +58,15 @@ class Coordinates {
   }
 
   setY(y) {
-    this.#y = Math.floor(Number(y)) || 0;
+    this.#y = this.#getInt(y);
+  }
+
+  #getInt(n = '') {
+    const num = Math.floor(Number(n));
+    if (isNaN(num)) {
+      throw new Error('Coor value must a number');
+    }
+    return num;
   }
 }
 
