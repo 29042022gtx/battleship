@@ -9,32 +9,41 @@ const userClicks = [Coordinates.prototype];
 userClicks.pop();
 const computerClicks = [Coordinates.prototype];
 computerClicks.pop();
-const computerBoard = document.querySelector('.computer-board');
+const computerBoard = getElement('.computer-board');
 pushBoard();
 const userBoard = getElement('.user-board');
+let boardShip = HTMLElement.prototype;
 let head = HTMLElement.prototype;
 let idx = 0;
 let gapX = 0;
 let gapY = 0;
 userBoard.addEventListener('mousedown', mousedown);
+const randomizeBtn = getElement('#randomize');
+randomizeBtn.addEventListener('click', randomizeBoard);
 const startBtn = getElement('#start');
-startBtn.addEventListener('click', () => {
+startBtn.addEventListener('click', startGame);
+
+function startGame() {
   computerBoard.addEventListener('click', computerEvent);
   userBoard.removeEventListener('mousedown', mousedown);
+  randomizeBtn.style.display = 'none';
+  randomizeBtn.removeEventListener('click', randomizeBoard);
   startBtn.classList.add('started');
-});
-const randomizeBtn = getElement('#randomize');
-randomizeBtn.addEventListener('click', () => {
+}
+
+function randomizeBoard() {
   user.getGameboard().placeAllShips();
   const userBoard = getElement('.user-board');
   display.pushBoard(userBoard, user.getGameboard(), true);
-});
+}
 
 function mousedown(e = MouseEvent.prototype) {
   const target = toElement(e.target);
+  boardShip = target;
   if (!target.classList.contains('board-ship')) {
     return;
   }
+  boardShip.classList.add('board-ship-hover');
   idx = parseInt(target.getAttribute('data-idx'));
   const square = getElementXY(e.clientX, e.clientY);
   if (target.offsetHeight > target.offsetWidth) {
@@ -68,6 +77,7 @@ function mouseup() {
 }
 
 function mousemove(e = MouseEvent.prototype) {
+  boardShip.classList.remove('board-ship-hover');
   unMarkSquares(head, idx);
   head = getElementXY(e.clientX - gapX, e.clientY - gapY);
   markSquares(head, idx);
@@ -275,6 +285,12 @@ function pushBoard() {
 }
 
 function showResultDialog(s = '') {
+  startBtn.style.display = 'none';
+  const replayBtn = getElement('#replay');
+  replayBtn.style.display = 'inline';
+  replayBtn.addEventListener('click', () => {
+    location.reload();
+  });
   const dialog = document.querySelector('dialog');
   const message = dialog.querySelector('.message');
   message.textContent = s;

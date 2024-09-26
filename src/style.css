@@ -13,9 +13,9 @@
   --yellow: #ffd900;
   --neonyellow: #ffff8a;
   --green: #00c220;
-  --neongreen: #7fff94;
+  --neongreen: #a0f9af;
   --orange: #ffa200;
-  --neonorange: #ffbf52;
+  --neonorange: #ffab52;
 }
 
 * {
@@ -76,8 +76,8 @@ img {
   user-select: none;
 }
 
-.board-ship:hover {
-  opacity: 0.75;
+.board-ship-hover {
+  opacity: 0.5;
 }
 
 .board-title {
@@ -93,12 +93,6 @@ img {
   border: 1px solid #f5f5f5;
 }
 
-.ship-cell {
-  opacity: 1;
-  /* background-color: var(--lightblue);
-  border-color: transparent; */
-}
-
 .missed-square {
   background-color: var(--neonyellow);
   border-color: transparent;
@@ -111,34 +105,39 @@ img {
 }
 
 .valid-square {
+  opacity: 0.5;
   background-color: var(--neongreen);
   border-color: transparent;
   z-index: 1;
 }
 
 .invalid-square {
+  opacity: 0.5;
   background-color: var(--neonorange);
   border-color: transparent;
   z-index: 1;
 }
 
-#start,
-#randomize {
+.btn {
   padding: 4px 8px;
   font-size: 100%;
   background-color: var(--cloud);
   border: none;
   border-radius: 4px;
+  outline: 1px solid transparent;
+  outline-offset: -2px;
   transition: all 0.1s;
 }
 
-#start:hover,
-#randomize:hover {
+.btn:focus {
+  outline-color: white;
+}
+
+.btn:hover {
   background-color: var(--bone);
 }
 
-#start:active,
-#randomize:active {
+.btn:active {
   background-color: white;
 }
 
@@ -207,19 +206,4 @@ because the nesting selector cannot represent pseudo-elements. */
   dialog[open]::backdrop {
     background-color: rgb(0 0 0 / 0%);
   }
-}
-
-.btn {
-  padding: 4px 8px;
-  font-size: 100%;
-  background-color: white;
-  border: none;
-  border-radius: 0.2em;
-  outline: 1px solid transparent;
-  outline-offset: -1;
-}
-
-.btn:focus {
-  outline-color: var(--dark);
-  outline-offset: -1;
 }
