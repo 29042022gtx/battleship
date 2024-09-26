@@ -16,6 +16,24 @@ class Gameboard {
     this.#missedCoorList.pop();
   }
 
+  isValidCoorListFor(idx, coorList = [Coordinates.prototype]) {
+    const coorListAll = this.getCoorListAllExcept(idx);
+    return coorList.every((coor) => {
+      return this.#isValidCoor(coorListAll, coor);
+    });
+  }
+
+  getCoorListAllExcept(idx) {
+    const coorList = [];
+    const shipList = this.getShipList();
+    for (let i in shipList) {
+      if (i != idx) {
+        coorList.push(...shipList[i].getCoorList());
+      }
+    }
+    return coorList;
+  }
+
   isAllSunk() {
     return this.#shipList.every((ship) => {
       // let s = '';
@@ -37,13 +55,13 @@ class Gameboard {
       const coorList = ship.getCoorList();
       const isShipCell = coorList.some((val) => {
         return val.equals(coor);
-      })
+      });
       if (!isShipCell) {
         return false;
       }
       ship.hit();
       return true;
-    })
+    });
 
     if (!hit) {
       this.#missedCoorList.push([x, y]);

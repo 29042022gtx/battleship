@@ -13,17 +13,16 @@
   --yellow: #ffd900;
   --neonyellow: #ffff8a;
   --green: #00c220;
-  --priority1: #ff9c9c;
-  --priority2: #89c0ff;
-  --priority3: #85ef96;
+  --neongreen: #7fff94;
+  --orange: #ffa200;
+  --neonorange: #ffbf52;
 }
 
 * {
-  transition: all .4s;
+  /* transition: all .4s; */
 }
 
 svg {
-  /* width: 1em; */
   height: 1em;
   vertical-align: -0.125em;
   pointer-events: none;
@@ -49,7 +48,7 @@ img {
 }
 
 .header-title {
-  margin: .5em;
+  margin: 0.5em;
   text-align: center;
   font-size: 2em;
 }
@@ -68,6 +67,17 @@ img {
   width: fit-content;
   margin: auto;
   border: 1px solid #f5f5f5;
+  /* position: relative; */
+}
+
+.board-ship {
+  transition: none;
+  background-color: var(--lightblue);
+  user-select: none;
+}
+
+.board-ship:hover {
+  opacity: 0.75;
 }
 
 .board-title {
@@ -76,18 +86,17 @@ img {
 
 .board-square {
   box-sizing: border-box;
-  position: relative;
   aspect-ratio: 1;
   background-color: var(--neonblue);
   background-color: white;
   border: none;
   border: 1px solid #f5f5f5;
-  z-index: 1;
 }
 
 .ship-cell {
-  background-color: var(--lightblue);
-  border-color: transparent;
+  opacity: 1;
+  /* background-color: var(--lightblue);
+  border-color: transparent; */
 }
 
 .missed-square {
@@ -98,6 +107,44 @@ img {
 .hit-cell {
   background-color: var(--neonred);
   border-color: transparent;
+  z-index: 1;
+}
+
+.valid-square {
+  background-color: var(--neongreen);
+  border-color: transparent;
+  z-index: 1;
+}
+
+.invalid-square {
+  background-color: var(--neonorange);
+  border-color: transparent;
+  z-index: 1;
+}
+
+#start,
+#randomize {
+  padding: 4px 8px;
+  font-size: 100%;
+  background-color: var(--cloud);
+  border: none;
+  border-radius: 4px;
+  transition: all 0.1s;
+}
+
+#start:hover,
+#randomize:hover {
+  background-color: var(--bone);
+}
+
+#start:active,
+#randomize:active {
+  background-color: white;
+}
+
+.started {
+  color: white;
+  background-color: var(--red) !important;
 }
 
 dialog {
