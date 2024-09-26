@@ -63,17 +63,16 @@ function mouseup() {
   if (head == null) {
     return;
   }
+  boardShip.classList.remove('board-ship-hover');
   unMarkSquares(head, idx);
   const coorList = coorListFromHead(head, idx);
   if (!isValidPosision(coorList, idx)) {
     return;
   }
-  const boardShip = shipIdxtoElement(idx);
   const ship = user.getGameboard().getShipList()[idx];
   let [x, y] = getDataXY(head);
   ship.setCoorList(new Coordinates(x, y));
   boardShip.style.gridArea = display.shipToGridArea(ship);
-  // console.log(boardShip.style.gridArea);
 }
 
 function mousemove(e = MouseEvent.prototype) {
@@ -130,7 +129,12 @@ function getSquareIdx(coorList = [Coordinates.prototype]) {
     user.getGameboard().getWidth() * user.getGameboard().getHeight();
   for (let coor of coorList) {
     let idx = coorToNum(coor.getX(), coor.getY());
-    if (idx >= 0 && idx < maxLength) {
+    if (
+      coor.getX() >= 0 &&
+      coor.getX() < user.getGameboard().getWidth() &&
+      idx >= 0 &&
+      idx < maxLength
+    ) {
       arr.push(idx);
     }
   }
@@ -141,21 +145,7 @@ function getDataXY(element = HTMLElement.prototype) {
   return [element.getAttribute('data-x'), element.getAttribute('data-y')];
 }
 
-function shipIdxtoElement(idx) {
-  let elementList = userBoard.children;
-  for (let i = 0; i < elementList.length; i += 1) {
-    let element = toElement(elementList[i]);
-    let currentIdx = parseInt(element.getAttribute('data-idx'));
-    if (currentIdx == idx) {
-      return element;
-    }
-  }
-  return toElement(null);
-}
-
 function getElementXY(clientX, clientY) {
-  // clientX = 10;
-  // clientY = 10;
   let elementList = userBoard.children;
   for (let i = 0; i < elementList.length; i += 1) {
     let element = toElement(elementList[i]);

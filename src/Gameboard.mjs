@@ -36,11 +36,6 @@ class Gameboard {
 
   isAllSunk() {
     return this.#shipList.every((ship) => {
-      // let s = '';
-      // ship.getCoorList().forEach((coor) => {
-      //   s += '(' + coor.getX() + ', ' + coor.getY() + '); ';
-      // });
-      // console.log(s);
       return ship.isSunk();
     });
   }
@@ -89,7 +84,6 @@ class Gameboard {
     if (shipIdx < 0 || shipIdx >= this.#shipList.length) {
       return false;
     }
-
     const ship = this.#shipList[shipIdx];
     const coor = new Coordinates(x, y);
     const isNewValidCoorList = this.#isValidCoorList(
