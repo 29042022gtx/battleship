@@ -59,6 +59,15 @@ img {
   flex-wrap: wrap;
   justify-content: center;
   max-width: none;
+  width: fit-content;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin: auto;
 }
 
 .board {
